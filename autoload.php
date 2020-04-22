@@ -1,9 +1,12 @@
 <?php
 
-spl_autoload_register(function ($class) {
-    $models = 'App/Models/'.$class.'.php';
-    $controllers = 'App/Controllers/'.$class.'.php';
-    $config = 'App/Core/'.$class.'.php';
+spl_autoload_register('autoLoader');
+
+function autoLoader($class)
+{
+    $models = str_replace('\\', '/', $class).'.php';
+    $controllers = str_replace('\\', '/', $class).'.php';
+    $config = str_replace('\\', '/', $class).'.php';
 
     if (file_exists($models)) {
         require_once $models;
@@ -12,4 +15,4 @@ spl_autoload_register(function ($class) {
     } elseif (file_exists($config)) {
         require_once $config;
     }
-});
+}
